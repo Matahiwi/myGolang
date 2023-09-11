@@ -1,0 +1,17 @@
+name: Reusable Workflow
+on:
+  workflow_call 
+    outputs:
+      return-value:
+         description: The return value of the reusable workflow
+         value: ${{ jobs.hackaround.outputs.some-output }}
+  jobs:
+    hackaround:
+    outputs:
+      some-output:
+         value: ${{ steps.set-result.outputs.my-step-result }}  # grab the value from the step below, this is passed back to the calling workflow
+      runs-on: ubuntu-latest
+      steps:
+        - name: Set result output to be returned from this reusable workflow
+          id: set-result
+          run: echo "my-step-result=sucess" >> $GITHUB_OUTPUT
