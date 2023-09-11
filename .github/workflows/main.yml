@@ -1,0 +1,22 @@
+name: First Golang Workflow 
+on: [ workflow_dispatch ] 
+jobs:
+  golang-first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download code from the repo to the runner
+        uses: actions/checkout@v3 
+      - name: Install Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.19 
+      - name: Run Tests on functions in Code
+        run:  make test 
+      - name: build the Binary
+        run:  make build
+      - name: Run the binary with make run main.go
+        run:  make run
+      - name: run the binary directly then delete it
+        run: | 
+          make run_binary
+          make rm
